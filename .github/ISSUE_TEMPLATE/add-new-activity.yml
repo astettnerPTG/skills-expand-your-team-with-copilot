@@ -1,0 +1,111 @@
+name: Add New Activity
+description: Request to add a new extracurricular activity to the system
+title: "Add New Activity: [ACTIVITY NAME]"
+labels: ["enhancement", "activity", "teacher-request"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Add New Activity Request
+        
+        Please fill out this form to request adding a new extracurricular activity to the Mergington High School system.
+        
+        **Instructions for Copilot Coding Agent:**
+        This request will add a new activity to the database with all specified details. The activity will be immediately available for student registration once implemented.
+
+  - type: input
+    id: activity-name
+    attributes:
+      label: Activity Name
+      description: What should this activity be called?
+      placeholder: "e.g., Drama Club, Soccer Team, Science Fair Prep"
+    validations:
+      required: true
+
+  - type: textarea
+    id: activity-description
+    attributes:
+      label: Activity Description
+      description: Provide a detailed description of what students will do in this activity
+      placeholder: "e.g., Students will learn acting techniques, perform in school plays, and develop public speaking skills"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: schedule-days
+    attributes:
+      label: Schedule - Days of the Week
+      description: Select all days when this activity will meet
+      options:
+        - label: Monday
+        - label: Tuesday
+        - label: Wednesday
+        - label: Thursday
+        - label: Friday
+        - label: Saturday
+        - label: Sunday
+
+  - type: input
+    id: start-time
+    attributes:
+      label: Start Time
+      description: When does the activity start? (Use 24-hour format)
+      placeholder: "e.g., 15:30 for 3:30 PM"
+    validations:
+      required: true
+
+  - type: input
+    id: end-time
+    attributes:
+      label: End Time
+      description: When does the activity end? (Use 24-hour format)
+      placeholder: "e.g., 17:00 for 5:00 PM"
+    validations:
+      required: true
+
+  - type: input
+    id: max-participants
+    attributes:
+      label: Maximum Participants
+      description: What is the maximum number of students who can participate?
+      placeholder: "e.g., 15"
+    validations:
+      required: true
+
+  - type: textarea
+    id: special-requirements
+    attributes:
+      label: Special Requirements or Notes
+      description: Any special requirements, equipment needed, or additional information?
+      placeholder: "e.g., Requires access to auditorium, students must bring their own instruments"
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Acceptance Criteria
+        
+        **For the Copilot Coding Agent - this task is complete when:**
+        - [ ] New activity is added to the `initial_activities` dictionary in `src/backend/database.py`
+        - [ ] Activity includes all required fields: name, description, schedule, schedule_details, max_participants
+        - [ ] Schedule details include properly formatted days array, start_time, and end_time
+        - [ ] Activity appears in the web interface and can be filtered by day/time
+        - [ ] Teachers can register students for the new activity
+        - [ ] Database is re-initialized if needed to include the new activity
+        
+        ## Implementation Hints
+        
+        - Add the activity to the `initial_activities` dictionary in `src/backend/database.py`
+        - Follow the existing format with both `schedule` (human-readable) and `schedule_details` (structured data)
+        - Time format should be 24-hour (e.g., "15:30" not "3:30 PM")
+        - Initialize participants as an empty array: `"participants": []`
+        - Test that the activity appears correctly in the web interface
+        
+        ## Context & Limitations
+        
+        - Activities are stored in MongoDB but initialized from the Python dictionary
+        - Changes require server restart to take effect
+        - Activity names must be unique
+        - Maximum participants should be a reasonable number (typically 10-30)
+        - Start time must be before end time

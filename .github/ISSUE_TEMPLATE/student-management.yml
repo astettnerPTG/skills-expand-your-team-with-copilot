@@ -1,0 +1,149 @@
+name: Student Management Task
+description: Request help with managing student registrations and data
+title: "Student Management: [BRIEF DESCRIPTION]"
+labels: ["enhancement", "student-management", "teacher-request"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Student Management Task
+        
+        Please fill out this form to request help with managing student registrations, data, or related administrative tasks.
+        
+        **Instructions for Copilot Coding Agent:**
+        This request involves managing student data or registration processes. Be careful with data handling and ensure student privacy.
+
+  - type: dropdown
+    id: task-type
+    attributes:
+      label: Type of Task
+      description: What kind of student management task do you need help with?
+      options:
+        - Bulk register students for activity
+        - Remove multiple students from activity
+        - Transfer students between activities
+        - Add new teacher account
+        - Update student information
+        - Generate participation report
+        - Clear all registrations for activity
+        - Import student list from file
+        - Export student registration data
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: input
+    id: affected-activity
+    attributes:
+      label: Activity Name (if applicable)
+      description: Which activity is this related to?
+      placeholder: "e.g., Chess Club, Programming Class"
+
+  - type: textarea
+    id: student-details
+    attributes:
+      label: Student Information
+      description: Provide student details (emails, names, etc.) relevant to this task
+      placeholder: |
+        For bulk operations, provide student emails one per line:
+        john.doe@mergington.edu
+        jane.smith@mergington.edu
+        mike.johnson@mergington.edu
+
+  - type: textarea
+    id: task-description
+    attributes:
+      label: Detailed Task Description
+      description: Explain exactly what needs to be done
+      placeholder: "e.g., Register these 5 students for Chess Club, remove all students from cancelled Drama Club, create report of all Programming Class participants"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency Level
+      description: How quickly do you need this completed?
+      options:
+        - Urgent - Needed today
+        - High - Needed this week
+        - Medium - Needed within 2 weeks
+        - Low - No specific deadline
+    validations:
+      required: true
+
+  - type: textarea
+    id: special-requirements
+    attributes:
+      label: Special Requirements
+      description: Any special requirements or constraints?
+      placeholder: "e.g., Need to notify students of changes, must preserve original registration dates, export in specific format"
+
+  - type: checkboxes
+    id: additional-actions
+    attributes:
+      label: Additional Actions Needed
+      description: Select any additional actions that should be taken
+      options:
+        - label: Send notification to affected students
+        - label: Update activity capacity if needed
+        - label: Create backup of current data
+        - label: Verify student email addresses
+        - label: Check for conflicts with other activities
+        - label: Generate confirmation report
+
+  - type: textarea
+    id: validation-criteria
+    attributes:
+      label: How to Verify Success
+      description: How will you know this task was completed correctly?
+      placeholder: "e.g., All students appear in the Chess Club participant list, activity shows correct number of participants"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Acceptance Criteria
+        
+        **For the Copilot Coding Agent - this task is complete when:**
+        - [ ] Student data is updated accurately according to the request
+        - [ ] All specified students are properly registered/unregistered
+        - [ ] Database integrity is maintained (no duplicate entries, valid email formats)
+        - [ ] Activity participant counts are updated correctly
+        - [ ] Changes are reflected in the web interface
+        - [ ] No existing valid registrations are accidentally removed
+        - [ ] Success can be verified using the criteria provided
+        
+        ## Implementation Hints
+        
+        **For registration tasks:**
+        - Use the existing signup/unregister endpoints in `src/backend/routers/activities.py`
+        - Validate email formats (should end with @mergington.edu)
+        - Check activity capacity limits before bulk registrations
+        - Update participant arrays in `src/backend/database.py` if needed
+        
+        **For data management:**
+        - Work with MongoDB collections: `activities_collection`, `teachers_collection`
+        - Preserve data integrity - make backups before major changes
+        - Handle edge cases (non-existent students, full activities, etc.)
+        - Follow existing patterns in the codebase
+        
+        **For teacher accounts:**
+        - Add to `initial_teachers` array in `src/backend/database.py`
+        - Hash passwords using the existing `hash_password` function
+        - Assign appropriate role ("teacher" or "admin")
+        - Follow existing username patterns
+        
+        ## Context & Limitations
+        
+        - Student emails should follow format: firstname.lastname@mergington.edu
+        - All data changes require server restart to take effect
+        - Student privacy must be maintained - don't expose sensitive information
+        - Activities have maximum participant limits that should be respected
+        - Database uses MongoDB but is initialized from Python dictionaries
+        - Teachers can only register students, not create their own accounts
+        - System is designed for school use with appropriate access controls
+        - Bulk operations should be implemented carefully to avoid data loss

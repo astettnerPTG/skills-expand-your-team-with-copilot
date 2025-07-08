@@ -1,0 +1,147 @@
+name: Bug Report
+description: Report a problem with the High School Management System
+title: "Bug: [BRIEF DESCRIPTION]"
+labels: ["bug", "teacher-request"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Report
+        
+        Please fill out this form to report a problem with the Mergington High School activity management system.
+        
+        **Instructions for Copilot Coding Agent:**
+        This report describes a bug that needs to be fixed. Follow the reproduction steps to understand the issue and implement the appropriate fix.
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Problem Description
+      description: Describe what is happening that shouldn't be happening
+      placeholder: "e.g., Students cannot be registered for Chess Club, error message appears when trying to login"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What should happen instead?
+      placeholder: "e.g., Students should be able to register for Chess Club without errors"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can someone else reproduce this problem?
+      placeholder: |
+        1. Go to the website
+        2. Click on Chess Club
+        3. Try to register a student
+        4. See error message
+    validations:
+      required: true
+
+  - type: dropdown
+    id: affected-area
+    attributes:
+      label: Which part of the system is affected?
+      description: Select the area where the problem occurs
+      options:
+        - Student Registration
+        - Teacher Login
+        - Activity Display
+        - Activity Filtering
+        - Student Unregistration
+        - Database/Data Issues
+        - User Interface
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: How severe is this problem?
+      description: Select the impact level
+      options:
+        - Critical - System completely unusable
+        - High - Major functionality broken
+        - Medium - Some features don't work properly
+        - Low - Minor issue or cosmetic problem
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-message
+    attributes:
+      label: Error Message (if any)
+      description: If you see an error message, copy it here exactly
+      placeholder: "e.g., HTTP 500 Internal Server Error, or specific error text"
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Web Browser
+      description: Which browser are you using?
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+        - Not sure
+
+  - type: input
+    id: teacher-username
+    attributes:
+      label: Teacher Username (if login-related)
+      description: If this is a login issue, what username are you trying to use?
+      placeholder: "e.g., mrodriguez, mchen"
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that might help?
+      placeholder: "e.g., This started happening yesterday, only affects certain activities, etc."
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Acceptance Criteria
+        
+        **For the Copilot Coding Agent - this task is complete when:**
+        - [ ] Bug is reproduced using the provided steps
+        - [ ] Root cause is identified (check logs, database, code logic)
+        - [ ] Fix is implemented without breaking existing functionality
+        - [ ] Fix is tested by following the reproduction steps
+        - [ ] Similar issues are prevented (if applicable)
+        - [ ] Code changes are minimal and focused on the specific issue
+        
+        ## Implementation Hints
+        
+        - Start by reproducing the bug following the exact steps provided
+        - Check the browser console for JavaScript errors
+        - Check the FastAPI logs for backend errors
+        - Look for issues in the relevant files:
+          - `src/backend/routers/activities.py` for activity-related issues
+          - `src/backend/routers/auth.py` for authentication issues
+          - `src/backend/database.py` for database issues
+          - `src/static/app.js` for frontend issues
+        - Test the fix thoroughly to ensure it doesn't break other functionality
+        - Consider edge cases and error handling
+        
+        ## Context & Limitations
+        
+        - The system uses FastAPI backend with MongoDB database
+        - Frontend is vanilla JavaScript with no frameworks
+        - Authentication is session-based with username/password
+        - Data is initialized from Python dictionaries in database.py
+        - System is designed for school administrators and teachers
+        - Some features may require server restart to take effect
+        - Focus on fixing the specific reported issue without major architectural changes
