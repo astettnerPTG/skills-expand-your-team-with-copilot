@@ -1,0 +1,143 @@
+name: Modify Existing Activity
+description: Request to modify details of an existing extracurricular activity
+title: "Modify Activity: [ACTIVITY NAME]"
+labels: ["enhancement", "activity", "teacher-request", "modification"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Modify Existing Activity Request
+        
+        Please fill out this form to request changes to an existing extracurricular activity in the Mergington High School system.
+        
+        **Instructions for Copilot Coding Agent:**
+        This request will modify an existing activity in the database. Only update the fields that are specified in the request.
+
+  - type: dropdown
+    id: existing-activity
+    attributes:
+      label: Activity to Modify
+      description: Which existing activity needs to be modified?
+      options:
+        - Chess Club
+        - Programming Class
+        - Art Workshop
+        - Math Competition Prep
+        - Debate Team
+        - Weekend Robotics Workshop
+        - Science Olympiad
+        - Sunday Chess Tournament
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: modification-type
+    attributes:
+      label: What needs to be modified?
+      description: Select all areas that need changes
+      options:
+        - label: Activity Name
+        - label: Description
+        - label: Schedule (days/times)
+        - label: Maximum Participants
+        - label: Other (specify below)
+
+  - type: input
+    id: new-name
+    attributes:
+      label: New Activity Name (if changing)
+      description: What should the new name be?
+      placeholder: "Leave blank if not changing"
+
+  - type: textarea
+    id: new-description
+    attributes:
+      label: New Description (if changing)
+      description: What should the new description be?
+      placeholder: "Leave blank if not changing"
+
+  - type: checkboxes
+    id: new-schedule-days
+    attributes:
+      label: New Schedule - Days of the Week (if changing)
+      description: Select all days when this activity will meet
+      options:
+        - label: Monday
+        - label: Tuesday
+        - label: Wednesday
+        - label: Thursday
+        - label: Friday
+        - label: Saturday
+        - label: Sunday
+
+  - type: input
+    id: new-start-time
+    attributes:
+      label: New Start Time (if changing)
+      description: When should the activity start? (Use 24-hour format)
+      placeholder: "e.g., 15:30 for 3:30 PM - Leave blank if not changing"
+
+  - type: input
+    id: new-end-time
+    attributes:
+      label: New End Time (if changing)
+      description: When should the activity end? (Use 24-hour format)
+      placeholder: "e.g., 17:00 for 5:00 PM - Leave blank if not changing"
+
+  - type: input
+    id: new-max-participants
+    attributes:
+      label: New Maximum Participants (if changing)
+      description: What should the new maximum number of participants be?
+      placeholder: "e.g., 20 - Leave blank if not changing"
+
+  - type: textarea
+    id: reason-for-change
+    attributes:
+      label: Reason for Change
+      description: Why are these changes needed?
+      placeholder: "e.g., Need to accommodate more students, room availability changed, etc."
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: Additional Notes
+      description: Any other details or special considerations?
+      placeholder: "e.g., Current participants should be notified, need to coordinate with other activities"
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Acceptance Criteria
+        
+        **For the Copilot Coding Agent - this task is complete when:**
+        - [ ] Existing activity is located in the `initial_activities` dictionary in `src/backend/database.py`
+        - [ ] Only the specified fields are modified while preserving all other data
+        - [ ] If schedule changes, both `schedule` (human-readable) and `schedule_details` (structured) are updated
+        - [ ] Current participants are preserved unless specifically requested to be cleared
+        - [ ] Changes are reflected in the web interface
+        - [ ] Activity can still be filtered correctly by day/time with new schedule
+        - [ ] Teachers can continue to register/unregister students as before
+        
+        ## Implementation Hints
+        
+        - Find the activity in the `initial_activities` dictionary in `src/backend/database.py`
+        - Update only the fields that are specified in the request
+        - If changing schedule, update both the human-readable `schedule` string and the structured `schedule_details` object
+        - Preserve the existing `participants` array unless explicitly asked to clear it
+        - If changing activity name, ensure the dictionary key is also updated
+        - Test that changes appear correctly in the web interface
+        
+        ## Context & Limitations
+        
+        - Activities are stored in MongoDB but initialized from the Python dictionary
+        - Changes require server restart to take effect
+        - If changing activity name, the dictionary key must also be updated
+        - Existing student registrations will be preserved unless explicitly requested to be cleared
+        - Schedule changes should be communicated to currently registered students
+        - Maximum participants should not be reduced below current participant count
